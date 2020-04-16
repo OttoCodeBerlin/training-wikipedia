@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link, Switch, Route } from 'react-router-dom'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Navbar from 'react-bootstrap/Navbar'
@@ -25,12 +27,13 @@ function App() {
                 <div key={country.ccn3}>
                   <Card style={{ width: '18rem', margin: '10px' }}>
                     <Card.Body>
-                      <Card.Title>{country.name.common}</Card.Title>
+                      <Card.Title>
+                        {country.flag} {country.name.common}
+                      </Card.Title>
                       <Card.Subtitle className="mb-2 text-muted">{country.name.official}</Card.Subtitle>
-                      
-                        <Card.Link href="#">See Details</Card.Link>
-                        <span style={{fontSize: '50px', marginLeft: '20px'}}>{country.flag}</span>
-                      
+                      <Link to={`/countries/${country.cca3}`}>
+                        <small>See Details</small>
+                      </Link>
                     </Card.Body>
                   </Card>
                 </div>
@@ -38,7 +41,9 @@ function App() {
             })}
           </Col>
           <Col>
-            <CountryDetail />
+            <Switch>
+              <Route exact path="/countries/:id" component={CountryDetail} />
+            </Switch>
           </Col>
         </Row>
       </Container>
